@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class KeySystem : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class KeySystem : MonoBehaviour
     }
     void FixedUpdate ()
     {
+        //if(EventSystem.current.IsPointerOverGameObject(-1)){ return; }
+
         Keys.ForEach(n => n.Update());
     }
 }

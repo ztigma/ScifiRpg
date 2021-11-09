@@ -22,10 +22,9 @@ public class ScreenSystem : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(!EventSystem.current.IsPointerOverGameObject(-1))
-        {
-            Screens.ForEach(n => n.Update());
-        }
+        if(EventSystem.current.IsPointerOverGameObject(-1)){ return; }
+
+        Screens.ForEach(n => n.Update());
     }
 }
 [System.Serializable]

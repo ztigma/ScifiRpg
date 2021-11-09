@@ -10,6 +10,81 @@ using System.Collections.Specialized;
 using System.Text;
 using UnityEngine;
 
+public static class ListMethods
+{
+	
+}
+public class GameObjectPersistenceModel
+{
+	public string GameObjectName;
+	public List<MonoPersistenceModel> monoPersistenceModels;
+}
+[System.Serializable]
+public class MonoPersistenceModel
+{
+	public string Tipo;
+	public string MonoJson;
+	public void Overwritte (GameObject o)
+	{
+		o.GetComponent(Tipo).OVERWRITTE(MonoJson);	
+	}
+}
+public static class MonoPersistenceMethods
+{
+
+	public static void Save (this List<GameObject> g, string FileName)
+	{
+		List<GameObjectPersistenceModel> r = new List<GameObjectPersistenceModel>();
+		foreach (var o in g)
+		{
+			var c = new List<MonoBehaviour>(o.GetComponents<MonoBehaviour>());
+			var w = c.ConvertAll(n => new MonoPersistenceModel(){ Tipo = n.TYPE(), MonoJson = n.TO_JSON()});
+			r.Add(new GameObjectPersistenceModel(){ GameObjectName = o.name, monoPersistenceModels = w});
+		}
+		FileName.SET_PERSISTENCE(ref r);
+	}
+	public static void Load (this List<GameObject> g, GameObject prefab, string FileName)
+	{
+		if(!FileName.EXIST_PERSISTENCE())
+		{
+			return;
+		}
+
+		List<GameObjectPersistenceModel> r = new List<GameObjectPersistenceModel>();
+		r = FileName.GET_PERSISTENCE(ref r);
+		foreach(var w in r)
+		{
+			var o = prefab.Instantiate();
+			o.SetActive(true);
+			o.name = w.GameObjectName;
+			w.monoPersistenceModels.ForEach(n => o.GetComponent(n.Tipo).OVERWRITTE(n.MonoJson));
+			g.Add(o);
+		}
+	}
+	public static void Save (this GameObject o, string FileName)
+	{
+		List<MonoPersistenceModel> r = new List<MonoPersistenceModel>();
+		var c = new List<MonoBehaviour>(o.GetComponents<MonoBehaviour>());
+		r = c.ConvertAll(n => new MonoPersistenceModel(){ Tipo = n.TYPE(), MonoJson = n.TO_JSON()});
+		FileName.SET_PERSISTENCE(ref r);
+	}
+	public static void Load(this GameObject o, string FileName)
+	{
+		List<MonoPersistenceModel> r = new List<MonoPersistenceModel>();
+		r = FileName.GET_PERSISTENCE(ref r);
+		r.ForEach(n => o.GetComponent(n.Tipo).OVERWRITTE(n.MonoJson));
+	}
+	public static T Instantiate<T>(this T prefab) where T : Component
+	{
+		var g = GameObject.Instantiate(prefab);
+		return g;
+	}
+	public static GameObject Instantiate(this GameObject prefab)
+	{
+		var g = GameObject.Instantiate(prefab);
+		return g;
+	}
+}
 public static class OriginableMethods
 {
 	public static void GetOrigin<T>(this T o, ref T receptor)
@@ -969,6 +1044,10 @@ public static class Ser
 	{
 		return JsonUtility.ToJson(o);
 	}
+	public static void OVERWRITTE(this object o, string JSON)
+	{
+		JsonUtility.FromJsonOverwrite(JSON, o);
+	}
 	public static T TO_OBJECT<T>(this string JSON, ref T o)
 	{
 		JsonUtility.FromJsonOverwrite(JSON, o);
@@ -985,6 +1064,26 @@ public static class Ser
 	}
 
 	//LIST OBJECT
+	public static string TO_JSON_LIST<T>(this List<T> o)
+	{
+		string r = "";
+		o.ForEach(n => r += n.TO_JSON_RAW() + "(J?)");
+		return r;
+	}
+	public static List<T> TO_OBJECT_LIST<T>(this string o, ref List<T> receptor)
+	{
+		List<T> r = new List<T>();
+		List<string> s = o.Splitting(new string[] {"(J?)"});
+		r = s.ConvertAll(n => n.TO_OBJECT<T>());
+		return r;
+	}
+	public static List<T> TO_OBJECT_LIST<T>(this string o, List<T> receptor)
+	{
+		List<T> r = new List<T>();
+		List<string> s = o.Splitting(new string[] {"(J?)"});
+		r = s.ConvertAll(n => n.TO_OBJECT<T>());
+		return r;
+	}
 	public static List<string> TO_JSON<T>(this List<T> o)
 	{
 		return o.ConvertAll(n => n.TO_JSON());

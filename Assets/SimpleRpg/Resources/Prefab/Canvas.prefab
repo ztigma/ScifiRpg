@@ -4343,7 +4343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1.8899994}
+  m_AnchoredPosition: {x: 0, y: 1.8900146}
   m_SizeDelta: {x: -30, y: -127.5863}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1816782787
@@ -15006,11 +15006,14 @@ MonoBehaviour:
   character:
     FileName: Player
     _fileContent:
+      Name: 
       lvl: 0
       cash: 0
       day: 0
       intentos: 0
       muertes: 0
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 0}
       Inventory: []
       Equiped: []
       Shop: []
@@ -15256,6 +15259,23 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 1x0y0z
+            m_BoolArgument: 0
+          m_CallState: 2
+  - Name: Mouse0
+    Key: 323
+    isGetKey: 0
+    Methods:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: Disparar
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 1x0y0z

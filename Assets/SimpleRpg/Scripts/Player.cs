@@ -46,10 +46,16 @@ public class Player : MonoBehaviour
 
         OnLoad.Invoke();
         character.fileContent.GetOrigin(ref damageBody.character);
+
+        damageBody.transform.position = character.fileContent.position;
+        damageBody.transform.rotation = character.fileContent.rotation;
     }
     void OnDestroy ()//SAVE
     {
         OnSave.Invoke();
+
+        character.fileContent.position = damageBody.transform.position;
+        character.fileContent.rotation = damageBody.transform.rotation;
 
         character.Save();
         persistenceVariable.variable = ItemCount;
@@ -100,21 +106,85 @@ public class PermaCharacter : PermaObject<Character>
         _fileContent = variable;
     }
 }
+public static class CharacterMethod
+{
+    public static Character RandomCharacter (this List<Character> o, int LVL)
+    {
+        var r = new Character();
+        int i = (0).RandomCount(CharactersNamesList.Count);
+
+        r.Name = CharactersNamesList[i];
+        r.lvl = LVL;
+        r.Equiped.RandomItem(LVL);
+        r.Equiped.RandomItem(LVL);
+        r.Equiped.RandomItem(LVL);
+        r.Equiped.RandomItem(LVL);
+
+        r.StatsBase.RandomStats(LVL);
+        r.StatsFinal.StartStats();
+
+        r.StatsFinal.ForEach(n => n.Min = n.Max);
+
+        o.Add(r);
+        return r;
+    }
+    public static Character RandomCharacter (this Character r, int LVL)
+    {
+        int i = (0).RandomCount(CharactersNamesList.Count);
+        r.Name = CharactersNamesList[i];
+        r.lvl = LVL;
+        r.Equiped.RandomItem(LVL);
+        r.Equiped.RandomItem(LVL);
+        r.Equiped.RandomItem(LVL);
+        r.Equiped.RandomItem(LVL);
+        r.StatsBase.RandomStats(LVL);
+        r.StatsFinal.StartStats();
+        r.StatsFinal.ForEach(n => n.Min = n.Max);
+        return r;
+    }
+    public static List<string> CharactersNamesList
+    {
+        get
+        {
+            return CharacterNames.Splitting(new string[] { ":" });
+        }
+    }
+    public const string CharacterNames =
+    "Robot:Bot:Clone:Raptor:Aluna:Riuna:Lamento:"
+    +
+    "Nocturna:Lucero:Martillo del Alba:Alba:Mano de Dios:"
+    +
+    "Canibal Machina:Ex Machina:Lamentus:B.O.T:Alumina:"
+    +
+    "REX:TIRANUS:Alma:FEAR:Obscuros:Gear:Battle Gear:Battle Ship:"
+    +
+    "Ameno:Annuria:ZEUS:SpeedFire:QuickSilver:War Machine:Rampage:"
+    +
+    "Vampire:Werewolf:WOLF:Mente Colmena:Bug:DarkSide:Feed the Machine:"
+    +
+    "Enola Gay:Big Fat:Viuda Negra:Gambit:Fiera:Bear:USSR:USA:OTAN:"
+    +
+    "ONU:Big Bear:War Bear:Gray Scale:Omnibug:Pepe of Kekistan:Joker:"
+    ;
+}
 [System.Serializable]
 public class Character
 {
+    public string Name; private string Online_Name { set { Name = value.TO_VARIABLE();}}
     public int lvl = 1; private string Online_lvl { set { lvl = value.TO_VARIABLE();}}
     public int cash = 3; private string Online_cash { set { cash = value.TO_VARIABLE();}}
     public int day; private string Online_day { set { day = value.TO_VARIABLE();}}
     public int intentos = 0; private string Online_intentos { set { intentos = value.TO_VARIABLE();}}
     public int muertes = 0; private string Online_muertes { set { muertes = value.TO_VARIABLE();}}
-    public List<Item> Inventory = new List<Item>(); private string Online_Inventory { set { value.TO_OBJECT(ref Inventory);}}
-    public List<Item> Equiped = new List<Item>(); private string Online_Equiped { set { value.TO_OBJECT(ref Equiped);}}
-    public List<Item> Shop = new List<Item>(); private string Online_Shop { set { value.TO_OBJECT(ref Shop);}}
+    public Vector3 position;
+    public Quaternion rotation;
+    public List<Item> Inventory = new List<Item>(); private string Online_Inventory { set { value.TO_OBJECT_LIST(ref Inventory);}}
+    public List<Item> Equiped = new List<Item>(); private string Online_Equiped { set { value.TO_OBJECT_LIST(ref Equiped);}}
+    public List<Item> Shop = new List<Item>(); private string Online_Shop { set { value.TO_OBJECT_LIST(ref Shop);}}
     public int ShopItems = 12; private string Online_ShopItems { set { ShopItems = value.TO_VARIABLE();}}
     public bool isNewItemsTime = true; private string Online_isNewItemsTime { set { isNewItemsTime = value.TO_VARIABLE();}}
-    public List<SingleStats> StatsBase = new List<SingleStats>(); private string Online_StatsBase { set { value.TO_OBJECT(ref StatsBase);}}
-    public List<SingleStats> StatsFinal = new List<SingleStats>(); private string Online_StatsFinal { set { value.TO_OBJECT(ref StatsFinal);}}
+    public List<SingleStats> StatsBase = new List<SingleStats>(); private string Online_StatsBase { set { value.TO_OBJECT_LIST(ref StatsBase);}}
+    public List<SingleStats> StatsFinal = new List<SingleStats>(); private string Online_StatsFinal { set { value.TO_OBJECT_LIST(ref StatsFinal);}}
 
     public Character ()
     {
@@ -202,7 +272,11 @@ public class SingleStats
     {
         get
         {
-            if(_Min < _Max)
+            if(_Max <= 0)
+            {
+                return 1;
+            }
+            else if(_Min < _Max)
             {
                 return _Min;
             }
@@ -267,6 +341,8 @@ public static class SingleStatsMethods
     public const string ats = "Ataque Speed";
     public const string vb = "Velocidad Bala";
 
+    public const string rg = "rango";
+
     public static SingleStats HP (this List<SingleStats> o, Action<SingleStats> a = null)
     {
         if(a != null)
@@ -279,7 +355,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == rh));
         }
         return o.Find(n => n.Name == rh);
     }
@@ -287,7 +363,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == mp));
         }
         return o.Find(n => n.Name == mp);
     }
@@ -295,7 +371,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == rm));
         }
         return o.Find(n => n.Name == rm);
     }
@@ -303,7 +379,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == at));
         }
         return o.Find(n => n.Name == at);
     }
@@ -311,7 +387,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == df));
         }
         return o.Find(n => n.Name == df);
     }
@@ -319,7 +395,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == pe));
         }
         return o.Find(n => n.Name == pe);
     }
@@ -327,7 +403,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == ev));
         }
         return o.Find(n => n.Name == ev);
     }
@@ -335,7 +411,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == ve));
         }
         return o.Find(n => n.Name == ve);
     }
@@ -343,7 +419,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == ro));
         }
         return o.Find(n => n.Name == ro);
     }
@@ -351,7 +427,7 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == ats));
         }
         return o.Find(n => n.Name == ats);
     }
@@ -359,9 +435,17 @@ public static class SingleStatsMethods
     {
         if(a != null)
         {
-            a.Invoke(o.Find(n => n.Name == hp));
+            a.Invoke(o.Find(n => n.Name == vb));
         }
         return o.Find(n => n.Name == vb);
+    }
+    public static SingleStats RG (this List<SingleStats> o, Action<SingleStats> a = null)
+    {
+        if(a != null)
+        {
+            a.Invoke(o.Find(n => n.Name == rg));
+        }
+        return o.Find(n => n.Name == rg);
     }
     public static List<SingleStats> StartStats(this List<SingleStats> o, int min = 0, int max = 0)
     {
@@ -384,6 +468,7 @@ public static class SingleStatsMethods
         o.ADD_NO_REPEAT(new SingleStats() { Name = ats, Min = min, Max = max}, n => n.Name == ats);
         o.ADD_NO_REPEAT(new SingleStats() { Name = vb, Min = min, Max = max}, n => n.Name == vb);
 
+        o.ADD_NO_REPEAT(new SingleStats() { Name = rg, Min = min, Max = max}, n => n.Name == rg);
         return o;
     }
     public static List<SingleStats> ToZero(this List<SingleStats> o)
