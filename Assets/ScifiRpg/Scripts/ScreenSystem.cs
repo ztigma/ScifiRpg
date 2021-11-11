@@ -82,7 +82,6 @@ public enum ScreenCode { Xplus, Xminus, Yplus, Yminus, AllVectors }
 [System.Serializable]
 public class ScreenInput
 {
-    public Vector3 OffSet;
     [SerializeField] private Vector3 ScreenPosition;
     public static implicit operator Vector3 (ScreenInput o)
     {
@@ -90,7 +89,7 @@ public class ScreenInput
         var w = p.width - p.center.x;
         var h = p.height - p.center.y;
         var m = new Vector3(Input.mousePosition.x - w, Input.mousePosition.y - h, 0f);
-        o.ScreenPosition = new Vector3((m.x / w) * o.OffSet.x, (m.y / h) * o.OffSet.y, 0f);
+        o.ScreenPosition = new Vector3(m.x / w, m.y / h, 0f);
         return o.ScreenPosition;
     }
 }

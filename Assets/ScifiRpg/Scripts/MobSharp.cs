@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class MobSharp : MonoBehaviour
 {
+    public string pensamiento;
     public int index = 0;
     public float RePensar = 3f;
     public List<MobSharpModel> mobSharpModels;
@@ -17,6 +18,7 @@ public class MobSharp : MonoBehaviour
     void FixedUpdate()
     {
         mobSharpModels[index].PatronesDeCombate.Invoke();
+        pensamiento = mobSharpModels[index].Name;
     }
     public void Repensando ()
     {

@@ -18,7 +18,7 @@ public class ListGameObject : MonoBehaviour
         Mobs.RemoveAll(n => n == null);
     }
     // Update is called once per frame
-    void OnDestroy()
+    void OnApplicationQuit()
     {
         Mobs.Save(FileName);
     }

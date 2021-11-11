@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class MobRandom : MonoBehaviour
 {
-    public DamageBody damageBody;
+    public DamageBody damageBody
+    {
+        get
+        {
+            return GetComponent<DamageBody>();
+        }
+    }
     public ListGameObject listGameObjects;
     public bool isFirsLoad = true;
 
@@ -13,7 +19,7 @@ public class MobRandom : MonoBehaviour
         if(isFirsLoad)
         {
             damageBody.character = new Character().RandomCharacter
-            (Player.MySelf.character.fileContent.lvl + 10);
+            (Player.MySelf.character.fileContent.lvl * 2);
 
             name = damageBody.character.Name;
 

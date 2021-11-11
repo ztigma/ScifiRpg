@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Text DayView;
     public Text TrysView;
     public Text DeathsView;
+    public Text Kills;
     public ListView InventoryView;
     public ListView EquipView;
     public ListView TrainingView;
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     public PersistenceVariable persistenceVariable;
     public static Player MySelf;
 
+    public static PermaVariable Muertes;
+
     public Player ()
     {
         "ScifiRpg".START_SPECIAL_FOLDER();
@@ -32,6 +35,7 @@ public class Player : MonoBehaviour
     }
     void Start ()//LOAD
     {
+        Muertes =  new PermaVariable("Muertes");
         persistenceVariable = new PersistenceVariable("ItemCount");
         ItemCount = persistenceVariable.variable;
 
@@ -50,7 +54,7 @@ public class Player : MonoBehaviour
         damageBody.transform.position = character.fileContent.position;
         damageBody.transform.rotation = character.fileContent.rotation;
     }
-    void OnDestroy ()//SAVE
+    void OnApplicationQuit ()//SAVE
     {
         OnSave.Invoke();
 
@@ -59,14 +63,17 @@ public class Player : MonoBehaviour
 
         character.Save();
         persistenceVariable.variable = ItemCount;
+
+        Muertes.Save();
     }
     public void Update ()
     {
         character.fileContent.Update();
         CashView.text = "Cash: " + character.fileContent.cash;
         DayView.text = "Day: " + character.fileContent.day;
-        TrysView.text = "Tryies: " + character.fileContent.intentos;
-        DeathsView.text = "Deaths: " + character.fileContent.muertes;
+        TrysView.text = "Wave: " + character.fileContent.intentos;
+        DeathsView.text = "Deaths: " + Muertes;
+        Kills.text = "Kills: " + character.fileContent.kills;
     }
 
     //INVOKES
@@ -123,7 +130,19 @@ public static class CharacterMethod
         r.StatsBase.RandomStats(LVL);
         r.StatsFinal.StartStats();
 
-        r.StatsFinal.ForEach(n => n.Min = n.Max);
+        r.Update();
+
+        foreach (var n in r.StatsFinal)
+        {
+            if(n.Max < 0)
+            {
+                n.Min = 1;
+            }
+            else
+            {
+                n.Min = n.Max;
+            }
+        }
 
         o.Add(r);
         return r;
@@ -139,7 +158,20 @@ public static class CharacterMethod
         r.Equiped.RandomItem(LVL);
         r.StatsBase.RandomStats(LVL);
         r.StatsFinal.StartStats();
-        r.StatsFinal.ForEach(n => n.Min = n.Max);
+
+        r.Update();
+
+        foreach (var n in r.StatsFinal)
+        {
+            if(n.Max < 0)
+            {
+                n.Min = 1;
+            }
+            else
+            {
+                n.Min = n.Max;
+            }
+        }
         return r;
     }
     public static List<string> CharactersNamesList
@@ -165,6 +197,8 @@ public static class CharacterMethod
     "Enola Gay:Big Fat:Viuda Negra:Gambit:Fiera:Bear:USSR:USA:OTAN:"
     +
     "ONU:Big Bear:War Bear:Gray Scale:Omnibug:Pepe of Kekistan:Joker:"
+    +
+    "GLITCH:BUG:"
     ;
 }
 [System.Serializable]
@@ -175,7 +209,7 @@ public class Character
     public int cash = 3; private string Online_cash { set { cash = value.TO_VARIABLE();}}
     public int day; private string Online_day { set { day = value.TO_VARIABLE();}}
     public int intentos = 0; private string Online_intentos { set { intentos = value.TO_VARIABLE();}}
-    public int muertes = 0; private string Online_muertes { set { muertes = value.TO_VARIABLE();}}
+    public int kills;
     public Vector3 position;
     public Quaternion rotation;
     public List<Item> Inventory = new List<Item>(); private string Online_Inventory { set { value.TO_OBJECT_LIST(ref Inventory);}}
@@ -191,8 +225,13 @@ public class Character
         StatsBase.StartStats(0, 1);
         StatsFinal.StartStats();
     }
-    public void NewShopItems ()
+    public void NewShopItems (bool istime = false)
     {
+        if(istime)
+        {
+            isNewItemsTime = istime;
+        }
+
         if(isNewItemsTime)
         {
             Shop.Clear();
@@ -228,9 +267,23 @@ public class Character
         }
         else
         {
-            StatsFinal.ForEach(n => n.Min = n.Max);
+            foreach (var n in StatsFinal)
+            {
+                if(n.Max < 0)
+                {
+                    n.Min = 1;
+                }
+                else
+                {
+                    n.Min = n.Max;
+                }
+            }
+
+            NewShopItems(true);
+
             cash -= 1;
             day += 1;
+
         }
     }
 }
@@ -268,21 +321,26 @@ public class SingleStats
     public string Name;
     [SerializeField] private int _Min;
     [SerializeField] private int _Max;
+    public float Average;
+
     public int Min
     {
         get
         {
-            if(_Max <= 0)
-            {
-                return 1;
-            }
-            else if(_Min < _Max)
+            if(_Min < _Max)
             {
                 return _Min;
             }
             else
             {
-                return _Max;
+                if(Max < 0)
+                {
+                    return _Min;
+                }
+                else
+                {
+                    return _Max;
+                }
             }
         }
         set

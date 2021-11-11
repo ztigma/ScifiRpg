@@ -27,6 +27,7 @@ public class Municion : MonoBehaviour
         stats = new List<SingleStats>();
         stats = name.TO_OBJECT_LIST(ref stats);
         rb.AddRelativeForce(0f, 0f, VelocidadBala);
+        //Debug.Log("Velocidad Bala: " + VelocidadBala);
         Invoke("Destruir", Rango);
     }
     public void Destruir ()

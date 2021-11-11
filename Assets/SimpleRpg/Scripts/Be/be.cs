@@ -10,6 +10,36 @@ using System.Collections.Specialized;
 using System.Text;
 using UnityEngine;
 
+public static class Vector3Methods
+{
+	public static Vector3 Random_Vector3 (this Vector3 v)
+	{
+		var r = new Vector3
+		(
+			(-v.x).RandomMinMax(v.x)
+			, 
+			(-v.y).RandomMinMax(v.y)
+			, 
+			(-v.z).RandomMinMax(v.z)
+		)
+		;
+		return r;
+	}
+}
+public static class JsonMethods
+{
+	public static List<T> JSON_TO_OBJECT_LIST<T>(this string json, params string[] separador)
+	{
+		var jsonL = new List<string>(json.Split(separador, StringSplitOptions.RemoveEmptyEntries));
+		return jsonL.ConvertAll(n => n.TO_OBJECT<T>());
+	}
+	public static string OBJECT_LIST_TO_JSON<T>(this List<T> L, string separador)
+	{
+		var r = "";
+		L.ForEach(n => r += n.TO_JSON() + separador);
+		return r;
+	}
+}
 public static class ListMethods
 {
 	
@@ -295,9 +325,19 @@ public class PermaList<T>
 }
 public static class VariableMethods
 {
+	/*
 	public static Variable RandomMinMax (this object min, Variable max)
 	{
 		return UnityEngine.Random.Range(min.ToString().TO_INT(), (int)(max + 1));
+	}
+	*/
+	public static Variable RandomMinMax (this float min, Variable max)
+	{
+		return UnityEngine.Random.Range(min, max);
+	}
+	public static Variable RandomMinMax (this int min, Variable max)
+	{
+		return UnityEngine.Random.Range(min, max + 1);
 	}
 	public static int RandomCount (this int min, int max)
 	{

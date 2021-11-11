@@ -15,6 +15,8 @@ public class Player3D : MonoBehaviour
     public float DragOffset = 0.25f;
     public float VelocidadAhora;
 
+    public Text UiRotateSalida;
+
     public void SpeedToText(Text t)
     {
         t.text = VelocidadAhora + "";
@@ -22,13 +24,27 @@ public class Player3D : MonoBehaviour
     public void UiRotate(Text vector3)
     {
         var rotacion = player.character.fileContent.StatsFinal.RO();
-        var formula = vector3.text.ToVector3().PlusVector3Predicate(rotacion.Min, n => n != 0) * Time.fixedDeltaTime;
+        var w = vector3.text.ToVector3();
+
+        var e = new Vector3
+        (-w.x * (30 + rotacion.Min), -w.y * (30 + rotacion.Min), -w.z * (30 + rotacion.Min));
+
+        var formula = e * Time.fixedDeltaTime;
+
         Player3d_Transform.Rotate(formula);
+        if(UiRotateSalida == null) { return;}
+        UiRotateSalida.text = e.ToString();
     }
     public void Rotate(string vector3)
     {
         var rotacion = player.character.fileContent.StatsFinal.RO();
-        var formula = vector3.ToVector3().PlusVector3Predicate(rotacion.Min, n => n != 0) * Time.fixedDeltaTime;
+        var w = vector3.ToVector3();
+
+        var e = new Vector3
+        (-w.x * (30 + rotacion.Min), -w.y * (30 + rotacion.Min), -w.z * (30 + rotacion.Min));
+
+        var formula = e * Time.fixedDeltaTime;
+        
         Player3d_Transform.Rotate(formula);
     }
     public void Move(string vector3)
@@ -71,21 +87,5 @@ public static class VectorMethods
     public static Vector3 MultiplyVector3(this Vector3 a, Vector3 b)
     {
         return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
-    }
-    public static Vector3 PlusVector3Predicate(this Vector3 a, Variable b, Predicate<float> p)
-    {
-        if(p.Invoke(a.x))
-        {
-            a += new Vector3(b, 0f, 0f);
-        }
-        if(p.Invoke(a.y))
-        {
-            a += new Vector3(0f, b, 0f);
-        }
-        if(p.Invoke(a.z))
-        {
-            a += new Vector3(0f, 0f, b);
-        }
-        return a;
     }
 }

@@ -19,7 +19,7 @@ public class MonoPersistence : MonoBehaviour
             MethodsInLoad.Invoke();
 		}
     }
-    void OnDestroy ()
+    void OnApplicationQuit ()
     {
         MethodsInSave.Invoke();
         fileName.SET_PERSISTENCE(ToSave);

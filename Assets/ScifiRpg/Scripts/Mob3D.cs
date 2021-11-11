@@ -14,6 +14,20 @@ public class Mob3D : MonoBehaviour
     public float VelocidadAhora;
     public Transform Punteria;
 
+    public float rotationForce;
+
+    public float Angulo;
+
+    void OnValidate ()
+    {
+        damageBody.character.Update();
+    }
+    void FixedUpdate ()
+    {
+        Player3d_Rb.drag = Player3d_Rb.velocity.magnitude * DragOffset;// mas rapido mas resistencia a la velocidad
+        Player3d_Rb.angularDrag = Player3d_Rb.velocity.magnitude * DragOffset;// mas rapido mas control de la rotacion
+        VelocidadAhora = Player3d_Rb.velocity.magnitude;
+    }
     public void SpeedToText(Text t)
     {
         t.text = VelocidadAhora + "";
@@ -21,13 +35,24 @@ public class Mob3D : MonoBehaviour
     public void UiRotate(Text vector3)
     {
         var rotacion = damageBody.character.StatsFinal.RO();
-        var formula = vector3.text.ToVector3().PlusVector3Predicate(rotacion.Min, n => n != 0) * Time.fixedDeltaTime;
+        var w = vector3.text.ToVector3();
+
+        var e = new Vector3
+        (-w.x * (30 + rotacion.Min), -w.y * (30 + rotacion.Min), -w.z * (30 + rotacion.Min));
+
+        var formula = e * Time.fixedDeltaTime;
+        
         Player3d_Transform.Rotate(formula);
     }
     public void Rotate(string vector3)
     {
         var rotacion = damageBody.character.StatsFinal.RO();
-        var formula = vector3.ToVector3().PlusVector3Predicate(rotacion.Min, n => n != 0) * Time.fixedDeltaTime;
+        var w = vector3.ToVector3();
+
+        var e = new Vector3
+        (-w.x * (30 + rotacion.Min), -w.y * (30 + rotacion.Min), -w.z * (30 + rotacion.Min));
+
+        var formula = e * Time.fixedDeltaTime;
         Player3d_Transform.Rotate(formula);
     }
     public void Move(string vector3)
@@ -35,13 +60,24 @@ public class Mob3D : MonoBehaviour
         var velocidad = damageBody.character.StatsFinal.VE();
         var formula = (vector3.ToVector3() * velocidad.Min) * Time.fixedDeltaTime;
         Player3d_Rb.AddRelativeForce(formula * MoveOffset);
+        velocidad.Average = VelocidadAhora;
     }
+
+    public const float gradesOffset = 180;
+
     public void Apuntar(Transform o)
     {
         var rotacion = damageBody.character.StatsFinal.RO();
         Punteria.LookAt(o);
 
-        transform.rotation = Quaternion.Lerp
-        (damageBody.transform.rotation, Punteria.rotation, (30f+rotacion.Min)/360f);
+
+        rotationForce = (30f+rotacion.Min)/gradesOffset;
+
+        Angulo = rotationForce * gradesOffset;
+
+        rotacion.Average = Angulo;
+
+        Player3d_Transform.rotation = Quaternion.SlerpUnclamped
+        (damageBody.transform.rotation, Punteria.rotation, rotationForce * Time.fixedDeltaTime);
     }
 }

@@ -3,9 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UiActions : MonoBehaviour
 {
+    public void To_Scene_Index(int i)
+    {
+        SceneManager.LoadScene(i);
+    }
+    public void Ui_To_Scene(Text scene_name)
+    {
+        SceneManager.LoadScene(scene_name.text);
+    }
+    public void To_Scene(string scene_name)
+    {
+        SceneManager.LoadScene(scene_name);
+    }
     public Player player
     {
         get
@@ -37,6 +50,7 @@ public class UiActions : MonoBehaviour
             var s = player.character.fileContent.StatsFinal.Find(n => n.Name == t.text);
             s.Min += 1;
             player.character.fileContent.cash -= 1;
+            player.character.fileContent.lvl += 1;
             player.Update();
             player.InvokeOnLoad();
         }

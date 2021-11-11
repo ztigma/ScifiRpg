@@ -11,16 +11,30 @@ public class DamageBody : MonoBehaviour
     {
         get
         {
-            var w = 1 - (character.StatsFinal.ATS().Min / Top);
+            var w = 1f - (character.StatsFinal.ATS().Min / (float)Top);
             if(w < 0)
             {
                 w = 0;
             }
+            character.StatsFinal.ATS().Average = w;
             return w;
         }
     }
     public float memoMetra;
 
+    void Start ()
+    {
+        memoMetra = 0;
+        InvokeRepeating("Regenerar", 0f, 60f);
+    }
+    public void Regenerar()
+    {
+        var hp = character.StatsFinal.HP();
+        if(hp.Min < hp.Max)
+        {
+            hp.Min++;
+        }
+    }
     public void Disparar (GameObject o)
     {
         if(Time.time > coolMetra + memoMetra)
@@ -46,7 +60,7 @@ public class DamageBody : MonoBehaviour
 
         var ev = character.StatsFinal.EV();
 
-        if(ev.Min > 0)//evasion
+        if(ev.Min > 1)//evasion
         {
             var t = Top + statsDamage.PE().Min;
             int u = (0).RandomMinMax(t);
@@ -60,7 +74,7 @@ public class DamageBody : MonoBehaviour
 
         var df = character.StatsFinal.DF();
 
-        if(df.Min > 0)//defensa
+        if(df.Min > 1)//defensa
         {
             Debug.Log("Defendido", this);
             r -= df.Min;

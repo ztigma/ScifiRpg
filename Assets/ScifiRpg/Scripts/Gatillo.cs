@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gatillo : MonoBehaviour
 {
-    void OnEnable ()
+    void FixedUpdate()
     {
         gameObject.SetActive(false);
     }

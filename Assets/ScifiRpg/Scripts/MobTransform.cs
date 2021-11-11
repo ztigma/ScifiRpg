@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MobTransform : MonoBehaviour
 {
+    public Vector3 RandomPosition;
     private DamageBody _damageBody;
     public DamageBody damageBody
     {
@@ -19,8 +20,17 @@ public class MobTransform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = damageBody.character.position;
-        transform.rotation = damageBody.character.rotation;
+        if(damageBody.character.position.magnitude == 0)
+        {
+            transform.position = RandomPosition.Random_Vector3();
+            transform.rotation = Random.rotation;
+            Debug.Log(transform.position);
+        }
+        else
+        {
+            transform.position = damageBody.character.position;
+            transform.rotation = damageBody.character.rotation;
+        }
     }
     // Update is called once per frame
     void Update()
