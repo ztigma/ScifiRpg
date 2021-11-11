@@ -209,9 +209,9 @@ public class Character
     public int cash = 3; private string Online_cash { set { cash = value.TO_VARIABLE();}}
     public int day; private string Online_day { set { day = value.TO_VARIABLE();}}
     public int intentos = 0; private string Online_intentos { set { intentos = value.TO_VARIABLE();}}
-    public int kills;
-    public Vector3 position;
-    public Quaternion rotation;
+    public int kills; private string Online_Kills { set { kills = value.TO_VARIABLE();}}
+    public Vector3 position; private string Online_position { set { position = value.TO_OBJECT(ref position);}}
+    public Quaternion rotation; private string Online_rotation { set { rotation = value.TO_OBJECT(ref rotation);}}
     public List<Item> Inventory = new List<Item>(); private string Online_Inventory { set { value.TO_OBJECT_LIST(ref Inventory);}}
     public List<Item> Equiped = new List<Item>(); private string Online_Equiped { set { value.TO_OBJECT_LIST(ref Equiped);}}
     public List<Item> Shop = new List<Item>(); private string Online_Shop { set { value.TO_OBJECT_LIST(ref Shop);}}

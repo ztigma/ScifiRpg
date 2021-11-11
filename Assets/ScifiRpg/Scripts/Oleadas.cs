@@ -28,7 +28,6 @@ public class Oleadas : MonoBehaviour
         for (int i = 0; i < rc; i++)
         {
             var g = prefab.Instantiate();
-            Debug.Log(g.character.position);
             g.gameObject.SetActive(true);
         }
     }

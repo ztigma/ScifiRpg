@@ -55,7 +55,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 999999
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -145,7 +145,6 @@ Transform:
   - {fileID: 2396402268422109583}
   - {fileID: 2396402268340199384}
   - {fileID: 2396402269841165088}
-  - {fileID: 7966136412061049356}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -326,52 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3647450e9e4dde99d8b645c962d64485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7289778844483770557
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7966136412061049356}
-  - component: {fileID: 8633794703086191102}
-  m_Layer: 0
-  m_Name: Oleadas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7966136412061049356
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289778844483770557}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2396402269687454696}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8633794703086191102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289778844483770557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 453968595ff08f165903ccb5e8ac82c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  Range: {x: 1000, y: 1000, z: 1000}
-  TimeSpawn: 60
 --- !u!1001 &2396402269543617548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -463,6 +416,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Time
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279860, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279862, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279862, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279862, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4997762332421959283, guid: 594847a5662f7b27b822f65ebd7e224c,
         type: 3}

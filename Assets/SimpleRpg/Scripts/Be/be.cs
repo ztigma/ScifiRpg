@@ -12,6 +12,10 @@ using UnityEngine;
 
 public static class Vector3Methods
 {
+	public static Vector3 Vector3_int (this Vector3 v)
+	{
+		return new Vector3((int)v.x, (int)v.y, (int)v.z);
+	}
 	public static Vector3 Random_Vector3 (this Vector3 v)
 	{
 		var r = new Vector3
@@ -21,6 +25,32 @@ public static class Vector3Methods
 			(-v.y).RandomMinMax(v.y)
 			, 
 			(-v.z).RandomMinMax(v.z)
+		)
+		;
+		return r;
+	}
+	public static Vector3 Random_Vector3 (this Vector3 v, Vector3 b)
+	{
+		var r = new Vector3
+		(
+			(v.x).RandomMinMax(b.x)
+			, 
+			(v.y).RandomMinMax(b.y)
+			, 
+			(v.z).RandomMinMax(b.z)
+		)
+		;
+		return r;
+	}
+	public static Vector3 Random_Vector3_int (this Vector3 v, Vector3 b)
+	{
+		var r = new Vector3
+		(
+			((int)v.x).RandomMinMax((int)b.x)
+			, 
+			((int)v.y).RandomMinMax((int)b.y)
+			, 
+			((int)v.z).RandomMinMax((int)b.z)
 		)
 		;
 		return r;
@@ -279,10 +309,11 @@ public class PermaObject<T>
 		return o.fileContent;
 	}
 }
+[System.Serializable]
 public class PermaList<T>
 {
-    public string fileName { get; set; }
-    [SerializeField] protected List<T> _fileContent = new List<T>();
+    public string FileName;
+    [SerializeField] protected List<T> _fileContent;
     public List<T> fileContent
     {
         get
@@ -295,29 +326,37 @@ public class PermaList<T>
             variable = _fileContent;
         }
     }
+	public bool isFirsLoad;
 	protected List<T> variable
     {
 		get
         {
-			if(fileName.EXIST_PERSISTENCE())
+			if(FileName.EXIST_PERSISTENCE())
 			{
-				return fileName.GET_PERSISTENCE(ref _fileContent);
+				_fileContent = _fileContent.NEW();
+				return FileName.GET_PERSISTENCE(ref _fileContent);
 			}
 			else
 			{
+				isFirsLoad = true;
 				return _fileContent.NEW();
 			}
         }
 		set
         {
-			fileName.SET_PERSISTENCE(value);
+			FileName.SET_PERSISTENCE(value);
         }
     }
+	public PermaList(){}
     public PermaList(string File_Name)
     {
-        fileName = File_Name;
+        FileName = File_Name;
         _fileContent = variable;
     }
+	public void Save ()
+	{
+		fileContent = this;
+	}
 	public static implicit operator List<T>(PermaList<T> o)
 	{
 		return o.fileContent;

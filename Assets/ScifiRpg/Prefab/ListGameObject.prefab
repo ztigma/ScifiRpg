@@ -226,7 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de1edaa9e074d9f0c91a3f6852f983b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RandomPosition: {x: 99999, y: 99999, z: 99999}
+  RandomPositionMin: {x: -2000, y: -2000, z: -2000}
+  RandomPosition: {x: 2000, y: 2000, z: 2000}
 --- !u!54 &6177044086540503428
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -646,6 +647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6177044088301979997}
   - component: {fileID: 6177044088301979994}
+  - component: {fileID: 903969491}
   m_Layer: 0
   m_Name: ListGameObject
   m_TagString: Untagged
@@ -683,6 +685,20 @@ MonoBehaviour:
   FileName: Mobs
   Prefab: {fileID: 6177044086540503162}
   Mobs: []
+--- !u!114 &903969491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6177044088301979996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453968595ff08f165903ccb5e8ac82c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6177044086540503431}
+  TimeSpawn: 60
 --- !u!1001 &6177044086898790422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -699,6 +715,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Time
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279860, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279862, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279862, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279862, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4997762332421959283, guid: 594847a5662f7b27b822f65ebd7e224c,
         type: 3}

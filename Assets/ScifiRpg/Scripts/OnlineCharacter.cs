@@ -47,7 +47,7 @@ public class OnlineCharacter : MonoBehaviour
             if(isLocalPlayer)
             {
                 body.character.Inventory = value;
-                CmdValue("Online_Inventory", body.character.Inventory.TO_JSON_RAW());
+                CmdValue("Online_Inventory", body.character.Inventory.TO_JSON_LIST());
                 //el accesor (get; set) del objeto debe tener el algoritmo de jsoneo en el set
                 //body.character.SET_VALUE(Variable_Name, data);
             }

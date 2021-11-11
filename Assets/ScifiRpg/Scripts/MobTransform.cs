@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MobTransform : MonoBehaviour
 {
+    public Vector3 RandomPositionMin;
     public Vector3 RandomPosition;
     private DamageBody _damageBody;
     public DamageBody damageBody
@@ -22,7 +23,7 @@ public class MobTransform : MonoBehaviour
     {
         if(damageBody.character.position.magnitude == 0)
         {
-            transform.position = RandomPosition.Random_Vector3();
+            transform.position = RandomPositionMin.Random_Vector3(RandomPosition) + Player.MySelf.transform.position;
             transform.rotation = Random.rotation;
             Debug.Log(transform.position);
         }
