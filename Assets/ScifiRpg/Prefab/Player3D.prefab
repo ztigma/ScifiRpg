@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2396402268340199384}
   - component: {fileID: 2396402268340199385}
   - component: {fileID: 2396402268340199366}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2396402268422109583}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Model3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,8 @@ GameObject:
   - component: {fileID: 2396402269687454696}
   - component: {fileID: 2396402269687454699}
   - component: {fileID: 2396402269687454698}
-  m_Layer: 0
+  - component: {fileID: 3862696093672243812}
+  m_Layer: 2
   m_Name: Player3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,6 +282,54 @@ MonoBehaviour:
       _Max: 0
       Average: 0
   memoMetra: 0
+--- !u!114 &3862696093672243812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2396402269687454697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44eab027dbe973e6880536c23e01172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.3
+  IniPosition: {x: 0, y: 0, z: 0}
+  sendLineModel:
+    from: {fileID: 2396402269687454696}
+    target: {fileID: 2396402268340199384}
+    layer:
+      serializedVersion: 2
+      m_Bits: 307
+    OnHit:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3862696093672243812}
+          m_MethodName: OnHit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    OnMiss:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3862696093672243812}
+          m_MethodName: OnMiss
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2396402269841165089
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2396402269841165088}
   - component: {fileID: 2396402269841165091}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Metralletas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,10 +381,45 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2396402268422109583}
     m_Modifications:
+    - target: {fileID: 126046095431668030, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296013456920073522, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296013457043983336, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296013457243536542, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296013457283170684, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296013457462869201, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3481829685726392349, guid: 3180dd0777959529fabaa93c9cc25d20,
         type: 3}
       propertyPath: m_Name
       value: Ship0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481829685726392349, guid: 3180dd0777959529fabaa93c9cc25d20,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3481829685726392351, guid: 3180dd0777959529fabaa93c9cc25d20,
         type: 3}
@@ -412,6 +496,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Damage
       objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279857, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4997762331959279860, guid: 594847a5662f7b27b822f65ebd7e224c,
         type: 3}
       propertyPath: m_Time
@@ -436,6 +525,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762331959279880, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4997762332421959283, guid: 594847a5662f7b27b822f65ebd7e224c,
         type: 3}
@@ -501,6 +595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Metralleta
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997762332421959295, guid: 594847a5662f7b27b822f65ebd7e224c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 594847a5662f7b27b822f65ebd7e224c, type: 3}
