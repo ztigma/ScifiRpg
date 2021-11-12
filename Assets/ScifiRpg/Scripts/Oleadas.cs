@@ -15,20 +15,8 @@ public class Oleadas : MonoBehaviour
     public void Spawn ()
     {
         Player.MySelf.character.fileContent.intentos += 1;
-
         var c = Player.MySelf.character.fileContent.lvl;
-
-        var rc = (1).RandomMinMax(c);
-
-        if(rc > 30)
-        {
-            rc = 30;
-        }
-
-        for (int i = 0; i < rc; i++)
-        {
-            var g = prefab.Instantiate();
-            g.gameObject.SetActive(true);
-        }
+        var g = prefab.Instantiate();
+        g.gameObject.SetActive(true);
     }
 }

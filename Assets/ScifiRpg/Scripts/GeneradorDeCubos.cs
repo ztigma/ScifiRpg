@@ -5,10 +5,10 @@ using UnityEngine;
 public class GeneradorDeCubos : MonoBehaviour
 {
     public Transform RelativeTo;
-    public float distanceLimit;
+    public float distanceLimit = 300f;
     public GameObject prefab;
-    public int Limit = 3000;
-    public Vector3 Vector3Limit;
+    public int CubeSpawnLimit = 1500;
+    public Vector3 Vector3Limit = new Vector3(300f, 300f, 300f);
     public PermaBricks Memoria;
 
     void Start ()
@@ -33,7 +33,7 @@ public class GeneradorDeCubos : MonoBehaviour
     // Start is called before the first frame update
     void FixedUpdate()
     {
-        if(Memoria.fileContent.Count < Limit)
+        if(Memoria.fileContent.Count < CubeSpawnLimit)
         {
             Memoria.fileContent.RandomBrick(transform, prefab, RelativeTo, Vector3Limit);
         }

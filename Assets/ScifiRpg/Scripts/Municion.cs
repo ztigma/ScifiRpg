@@ -11,14 +11,30 @@ public class Municion : MonoBehaviour
     {
         get
         {
-            return stats.VB().Min;
+            var r = stats.VB().Min;
+            if(r <= 1)
+            {
+                return 1;
+            }
+            else
+            {
+                return r;
+            }
         }
     }
     public int Rango
     {
         get
         {
-            return stats.RG().Min;
+            var r = stats.RG().Min;
+            if(r <= 1)
+            {
+                return 1;
+            }
+            else
+            {
+                return r;
+            }
         }
     }
     // Start is called before the first frame update

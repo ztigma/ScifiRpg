@@ -19,7 +19,7 @@ public class MobRandom : MonoBehaviour
         if(isFirsLoad)
         {
             damageBody.character = new Character().RandomCharacter
-            (Player.MySelf.character.fileContent.lvl * 2);
+            (Player.MySelf.character.fileContent.lvl);
 
             name = damageBody.character.Name;
 

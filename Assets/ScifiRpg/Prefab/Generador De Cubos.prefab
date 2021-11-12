@@ -47,7 +47,7 @@ MonoBehaviour:
   RelativeTo: {fileID: 0}
   distanceLimit: 300
   prefab: {fileID: 7771165931822063442}
-  Limit: 3000
+  CubeSpawnLimit: 1500
   Vector3Limit: {x: 300, y: 300, z: 300}
   Memoria:
     FileName: Bricks
