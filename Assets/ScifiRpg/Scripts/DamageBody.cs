@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DamageBody : MonoBehaviour
 {
     public const string DamageTag = "Damage";
     public Character character;
+    public UnityEvent OnShot;
+    public UnityEvent OnDamage;
+    private float LastDamage;
 
     public float coolMetra
     {
@@ -40,6 +44,7 @@ public class DamageBody : MonoBehaviour
         if(Time.time > coolMetra + memoMetra)
         {
             o.SetActive(true);
+            OnShot.Invoke();
             memoMetra = Time.time;
         }
     }
@@ -48,7 +53,11 @@ public class DamageBody : MonoBehaviour
         var o = c.transform.root;
         if(o.tag != DamageTag) { return; }
 
-        character.StatsFinal.HP(n => n.Min -= DamageProcess(o.name));
+        var d = o.name.Splitting(new string[] { Metralleta.ID});
+
+        if(d[1] == transform.root.GetInstanceID().ToString()) { return; }
+
+        character.StatsFinal.HP(n => n.Min -= DamageProcess(d[0]));
     }
     public const int Top = 1000;
     public int DamageProcess(string damage)
@@ -87,6 +96,17 @@ public class DamageBody : MonoBehaviour
         }
 
         Debug.Log("Damage = " + r, this);
+
+        LastDamage = r;
+        OnDamage.Invoke();
+
         return r;
+    }
+    public void UiSpawnDamage (TextMesh textMesh)
+    {
+        var g = textMesh.Instantiate();
+        g.transform.position = textMesh.transform.position;
+        g.text = "-" + LastDamage;
+        g.gameObject.SetActive(true);
     }
 }

@@ -2807,7 +2807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.008988986, g: 0.6239335, b: 0.9528302, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11313,7 +11313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.008988986, g: 0.6239335, b: 0.9528302, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -15450,6 +15450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Keys:
   - Name: Escape
+    isFixedUpdate: 0
     Key: 27
     isGetKey: 1
     Methods:
@@ -15478,40 +15479,43 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - Name: Q
+    isFixedUpdate: 1
     Key: 113
     isGetKey: 0
     Methods:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 7642689322406891179}
-          m_MethodName: Rotate
+          m_MethodName: RotateMitad
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 0x0,5y0z
+            m_StringArgument: 0x1y0z
             m_BoolArgument: 0
           m_CallState: 2
   - Name: E
+    isFixedUpdate: 1
     Key: 101
     isGetKey: 0
     Methods:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 7642689322406891179}
-          m_MethodName: Rotate
+          m_MethodName: RotateMitad
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 0x-0,5y0z
+            m_StringArgument: 0x-1y0z
             m_BoolArgument: 0
           m_CallState: 2
   - Name: W
+    isFixedUpdate: 1
     Key: 119
     isGetKey: 0
     Methods:
@@ -15529,6 +15533,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - Name: A
+    isFixedUpdate: 1
     Key: 97
     isGetKey: 0
     Methods:
@@ -15546,6 +15551,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - Name: D
+    isFixedUpdate: 1
     Key: 100
     isGetKey: 0
     Methods:
@@ -15563,6 +15569,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - Name: Mouse0
+    isFixedUpdate: 0
     Key: 323
     isGetKey: 0
     Methods:
@@ -15573,13 +15580,14 @@ MonoBehaviour:
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: Metralleta, Assembly-CSharp
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 1x0y0z
             m_BoolArgument: 0
           m_CallState: 2
   - Name: Space
+    isFixedUpdate: 1
     Key: 32
     isGetKey: 0
     Methods:
@@ -15597,6 +15605,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - Name: LeftControl
+    isFixedUpdate: 1
     Key: 306
     isGetKey: 0
     Methods:

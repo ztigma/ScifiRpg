@@ -16,7 +16,11 @@ public class KeySystem : MonoBehaviour
     {
         //if(EventSystem.current.IsPointerOverGameObject(-1)){ return; }
 
-        Keys.ForEach(n => n.Update());
+        Keys.FOR(n => n.isFixedUpdate, n => n.Update());
+    }
+    void Update ()
+    {
+        Keys.FOR(n => !n.isFixedUpdate, n => n.Update());
     }
 }
 public enum KeyEnum { GetKey, GetKeyDown, GetKeyUp }
@@ -24,6 +28,7 @@ public enum KeyEnum { GetKey, GetKeyDown, GetKeyUp }
 public class KeyModel
 {
     public string Name;
+    public bool isFixedUpdate = true;
     public KeyCode Key;
     public KeyEnum isGetKey;
     public UnityEvent Methods;

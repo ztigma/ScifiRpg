@@ -9,7 +9,7 @@ public class WhenMobDeath : MonoBehaviour
 
     void Start ()
     {
-        damageBody.character.StatsFinal.HP().Min = 1;
+        damageBody.character.StatsFinal.FOR(n => n.IsMinimus, n => n.Min = n.Max);
     }
     // Update is called once per frame
     void Update()

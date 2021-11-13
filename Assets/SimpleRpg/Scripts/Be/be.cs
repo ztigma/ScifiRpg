@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Text;
 using UnityEngine;
+using System.Globalization;
 
 public static class Vector3Methods
 {
@@ -72,7 +73,19 @@ public static class JsonMethods
 }
 public static class ListMethods
 {
-	
+	public static void FOR<T> (this List<T> l, Predicate<T> Requisito, params Action<T>[] Methods)
+	{
+		foreach (var i in l)
+		{
+			if(Requisito.Invoke(i))
+			{
+				foreach (var m in Methods)
+				{
+					m.Invoke(i);
+				}
+			}
+		}
+	}
 }
 public class GameObjectPersistenceModel
 {
@@ -137,6 +150,11 @@ public static class MonoPersistenceMethods
 	public static T Instantiate<T>(this T prefab) where T : Component
 	{
 		var g = GameObject.Instantiate(prefab);
+		return g;
+	}
+	public static T Instantiate<T>(this T prefab, Vector3 p) where T : Component
+	{
+		var g = GameObject.Instantiate(prefab, p, Quaternion.identity);
 		return g;
 	}
 	public static GameObject Instantiate(this GameObject prefab)

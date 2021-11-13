@@ -41,9 +41,9 @@ public class Municion : MonoBehaviour
     void Start()
     {
         stats = new List<SingleStats>();
-        stats = name.TO_OBJECT_LIST(ref stats);
+        var w = name.Splitting(new string[] { Metralleta.ID });
+        stats = w[0].TO_OBJECT_LIST(ref stats);
         rb.AddRelativeForce(0f, 0f, VelocidadBala);
-        //Debug.Log("Velocidad Bala: " + VelocidadBala);
         Invoke("Destruir", Rango);
     }
     public void Destruir ()

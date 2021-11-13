@@ -35,6 +35,18 @@ public class Player3D : MonoBehaviour
         if(UiRotateSalida == null) { return;}
         UiRotateSalida.text = e.ToString();
     }
+    public void RotateMitad(string vector3)
+    {
+        var rotacion = player.character.fileContent.StatsFinal.RO();
+        var w = vector3.ToVector3();
+
+        var e = new Vector3
+        ((-w.x/2f) * (30 + rotacion.Min), (-w.y/2f) * (30 + rotacion.Min), (-w.z/2f) * (30 + rotacion.Min));
+
+        var formula = e * Time.fixedDeltaTime;
+        
+        Player3d_Transform.Rotate(formula);
+    }
     public void Rotate(string vector3)
     {
         var rotacion = player.character.fileContent.StatsFinal.RO();
@@ -73,7 +85,13 @@ public static class VectorMethods
     public static Vector3 ToVector3(this string vector3)
     {
         var r = vector3.Splitting(new string[] { "x", "y", "z" });
-        return new Vector3(r[0].TO_FLOAT(), r[1].TO_FLOAT(), r[2].TO_FLOAT());
+        return new Vector3(
+        r[0].TO_FLOAT()
+        , 
+        r[1].TO_FLOAT()
+        , 
+        r[2].TO_FLOAT()
+        );
     }
     public const string ToUiVectorFormat = "{0}x{1}y{2}z";
     public static string ToUiVector3(this Vector3 vector3)

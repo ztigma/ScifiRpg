@@ -152,10 +152,12 @@ public static class CharacterMethod
         int i = (0).RandomCount(CharactersNamesList.Count);
         r.Name = CharactersNamesList[i];
         r.lvl = LVL;
+
+        //r.Equiped.RandomItem(LVL);
+        //r.Equiped.RandomItem(LVL);
+        //r.Equiped.RandomItem(LVL);
         r.Equiped.RandomItem(LVL);
-        r.Equiped.RandomItem(LVL);
-        r.Equiped.RandomItem(LVL);
-        r.Equiped.RandomItem(LVL);
+
         r.StatsBase.RandomStats(LVL);
         r.StatsFinal.StartStats();
 
@@ -322,6 +324,7 @@ public class SingleStats
     [SerializeField] private int _Min;
     [SerializeField] private int _Max;
     public float Average;
+    public bool IsMinimus { get { return Min < Max;}}
 
     public int Min
     {
